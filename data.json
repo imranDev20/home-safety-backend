@@ -1,0 +1,15 @@
+[{
+    "name": "Jonathan",
+    "address": "Salisbury ave, 19x12",
+    "phone": "+4407383996436",
+    "email": "imrandev20@gmail.com"
+},
+{
+    "orders": [{
+        "service": "Gas",
+        "type": "appliance",
+        "quantity": 1,
+        "price": "180"
+    }],
+    "user": "64295cffb8fa0b73e5c701fb"
+}]
