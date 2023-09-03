@@ -1,44 +1,62 @@
 const mongoose = require("mongoose");
 
-const serviceSchema = mongoose.Schema({
-  service: {
-    type: String,
-    required: [true, "Service name is required."],
-  },
-  type: {
-    type: String,
-    required: true,
-    enum: {
-      values: ["appliance", "board", "room"],
-    },
-  },
-  quantity: { type: Number, required: [true, "Quantity can't be empty."] },
-  price: {
-    type: String,
-    required: [true, "Price can't be empty."],
-  },
-});
-
-const orderSchema = mongoose.Schema(
+const orderSchema = new mongoose.Schema(
   {
-    services: {
-      type: [serviceSchema],
-      required: [true, "Service is required to place an order."],
+    firstName: {
+      type: String,
+      required: true,
+      trim: true,
     },
-    additional: {
-      zone: {
-        type: String,
+    lastName: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      trim: true,
+      unique: true,
+      lowercase: true,
+    },
+    phone: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    zipcode: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    address: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    services: [
+      {
+        serviceName: {
+          type: String,
+          required: true,
+          trim: true,
+        },
+        serviceDescription: {
+          type: String,
+          trim: true,
+        },
+        servicePrice: {
+          type: Number,
+          required: true,
+        },
       },
-    },
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: [true, "Corresponding user is required"],
-      ref: "Users",
-    },
+    ],
   },
-  { timestamp: true }
+  {
+    timestamps: true, // Automatically add createdAt and updatedAt fields
+  }
 );
 
-const Order = mongoose.model("Orders", orderSchema);
+const Order = mongoose.model("Order", orderSchema);
 
 module.exports = Order;

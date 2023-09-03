@@ -1,18 +1,22 @@
-const toolsRoutes = require("./routes/v1/tools.route.js");
-const ordersRoutes = require("./routes/v1/orders.route.js");
-const usersRoutes = require("./routes/v1/users.route.js");
-const colors = require("colors");
+const express = require("express");
+const bodyParser = require("body-parser");
 require("dotenv").config();
 
-const app = require("./app");
-
-// Database Connect
 require("./config/dbConfig");
+const app = require("./app");
+const ordersRoutes = require("./routes/v1/orders.route.js");
+const webhooksController = require("./controller/webhooks.controller");
+
+app.post(
+  "/api/v1/webhooks/stripe",
+  bodyParser.raw({ type: "application/json" }),
+  webhooksController.stripeWebhook
+);
+
+app.use(express.json());
 
 // Routes
-app.use("/api/v1/tools", toolsRoutes);
 app.use("/api/v1/orders", ordersRoutes);
-app.use("/api/v1/users", usersRoutes);
 
 // Global Routes
 app.get("/", (req, res) => {
